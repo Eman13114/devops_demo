@@ -24,9 +24,10 @@ jobs:
         run: npm install
 
       - name: Run tests
+        id: test_step  # Assign an ID to refer later
         run: npm test
 
- check_merge:
+  check_merge:
     needs: build
     runs-on: ubuntu-latest
     if: always()  # Ensure this job runs even if 'build' fails
@@ -34,7 +35,7 @@ jobs:
       - name: Identify Corrupted Branch
         run: |
           if [[ "${{ needs.build.result }}" == "failure" ]]; then
-            echo "🚨 Merge Alert! The latest push to branch $(git rev-parse --abbrev-ref HEAD) has corrupted the main branch."
+            echo "🚨 Merge Alert! The latest push to branch '$(git rev-parse --abbrev-ref HEAD)' has corrupted the main branch."
             exit 1
           else
             echo "✅ Merge Successful! All tests passed."
