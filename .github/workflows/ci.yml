@@ -24,13 +24,13 @@ jobs:
         run: npm install
 
       - name: Run tests
-        id: test_step  # Assign an ID to refer later
+        id: test_step
         run: npm test
 
   check_merge:
     needs: build
     runs-on: ubuntu-latest
-    if: always()  # Ensure this job runs even if 'build' fails
+    if: always()  # Ensures this job runs even if 'build' fails
     steps:
       - name: Identify Corrupted Branch
         run: |
